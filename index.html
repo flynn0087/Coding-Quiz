@@ -4,20 +4,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Intro Coding Quiz</title>
-    <link rel="stylesheet" href="style.css" />
 </head>
 <body>
     <div class="highscores"><a href="highscore.html">View Highscores</a></div>
     <div class="time">Time: </div>
 
-    <main class="intro">
+    <main class="intro" style="text-align:center">
         <h1>Coding Quiz!</h1>
         <section>
             You will have a 1:40 to answer 5 HTML coding related questions. Each
             wrong answer will dock your time by 10 seconds. Your final time is 
             your score.
         </section>
+        <button id="begin">Begin</button>
     </main>
-    
+
+    <div id="questions" style="display:none; text-align:center">
+        <h3 id="prompt"></h3>
+        <div id="options"></div>
+    </div>
+
+    <div id="results" style="display:none; text-align:center">
+        <h3>Finished</h3>
+        <p>Your score is </p>
+        <P>
+            Enter initials: <input type="text" id="initials"/>
+            <button id="submit">Submit</button>
+        </p>
+    </div>
+
+    <script src="javascript.js"></script>
 </body>
 </html>
