@@ -64,6 +64,7 @@ let choicesEl = document.getElementById("choices");
 let beginBtn = document.getElementById("begin");
 let submitBtn = document.getElementById("submit");
 
+//this function start the process of prompting questions by removing the start page and replacing with the removed questions, also initiates the clock
 function begin() {
     let startScreen = document.getElementById("intro-screen");
     startScreen.setAttribute("class", "remove");
@@ -73,21 +74,23 @@ function begin() {
     promptQuestion();
 }
 
+// this function prompts the questions and creates possible answers as buttons
 function promptQuestion() {
   let currentQuestion = questions[currentQArray];
   let promptEl = document.getElementById("prompt");
   promptEl.textContent = currentQuestion.q;
   choicesEl.innerHTML = "";
   currentQuestion.choices.forEach(function(choice, i) {
-    let choiceNode = document.createElement("button");
-    choiceNode.setAttribute("class", "choice");
-    choiceNode.setAttribute("value", choice);
-    choiceNode.textContent = i + 1 + ". " + choice;
-    choiceNode.onclick = promptSelect;
-    choicesEl.appendChild(choiceNode);
+    let responseBtns = document.createElement("button");
+    responseBtns.setAttribute("class", "choice");
+    responseBtns.setAttribute("value", choice);
+    responseBtns.textContent = i + 1 + ". " + choice;
+    responseBtns.onclick = promptSelect;
+    choicesEl.appendChild(responseBtns);
   });
 }
 
+//this function determines if the button selected as a response to the prompt is correct, if not it removes 10 seconds from the time, it also advances to the next question or initiate the end step if out of questions
 function promptSelect() {
     if (this.value !== questions[currentQArray].a) {
       time -= 10;
@@ -102,45 +105,49 @@ function promptSelect() {
     } else {
       promptQuestion();
     }
-  }
+}
 
-  function complete() {
-    clearInterval(timeId);
-    let resultsEl = document.getElementById("results");
-    resultsEl.removeAttribute("class");
-    let finalScoreEl = document.getElementById("final-score");
-    finalScoreEl.textContent = time;
-    questionsEl.setAttribute("class", "remove");
-  }
+//this function is the end step, it ends the time and accepts it as results
+function complete() {
+  clearInterval(timeId);
+  let resultsEl = document.getElementById("results");
+  resultsEl.removeAttribute("class");
+  let finalScoreEl = document.getElementById("final-score");
+  finalScoreEl.textContent = time;
+  questionsEl.setAttribute("class", "remove");
+}
 
-  function clock() {
-    time--;
-    timeEl.textContent = time;
-    if (time <= 0) {
-      complete();
-    }
+//this function creates the clock and checks if it is out of time
+function clock() {
+  time--;
+  timeEl.textContent = time;
+  if (time <= 0) {
+    complete();
   }
+}
 
-  function logScore() {
-    let initials = initialsEl.value.trim();
-    if (initials !== "") {
-      let highscores = JSON.parse(window.localStorage.getItem("highscores")) || [];
-      let newScore = {
-        score: time,
-        initials: initials
-      };
-      highscores.push(newScore);
-      window.localStorage.setItem("highscores", JSON.stringify(highscores));
-      window.location.href = "highscore.html";
-    }
+//this function logs the score and holds them in local storage
+function logScore() {
+  let initials = initialsEl.value.trim();
+  if (initials !== "") {
+    let highscores = JSON.parse(window.localStorage.getItem("highscores")) || [];
+    let newScore = {
+      score: time,
+      initials: initials
+    };
+    highscores.push(newScore);
+    window.localStorage.setItem("highscores", JSON.stringify(highscores));
+    window.location.href = "highscore.html";
   }
+}
 
-  function checkForEnter(event) {
-    if (event.key === "Enter") {
-      logScore();
-    }
+function checkForEnter(event) {
+  if (event.key === "Enter") {
+    logScore();
   }
-   
-  submitBtn.onclick = logScore;
-  beginBtn.onclick = begin;
-  initialsEl.onkeyup = checkForEnter;
+}
+
+//these power the tie the click of the button to its respective function
+submitBtn.onclick = logScore;
+beginBtn.onclick = begin;
+initialsEl.onkeyup = checkForEnter;

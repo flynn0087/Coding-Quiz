@@ -4,12 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Intro Coding Quiz</title>
+    <!-- style sheet link -->
     <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
+    <!-- link to highscores -->
     <div class="highscores"><a href="highscore.html">View Highscores</a></div>
+    <!-- timer -->
     <div class="time">Time: <span id="time">0</span></div>
 
+    <!-- details about the webpage i.e. rules of the game-->
     <main id="intro-screen" class="intro" style="text-align:center">
         <h1>Coding Quiz!</h1>
         <section>
@@ -17,14 +21,16 @@
             wrong answer will dock your time by 10 seconds. Your final time is 
             your score.
         </section>
+        <!-- start button -->   
         <button id="begin">Begin</button>
     </main>
-
+    <!-- the template for displaying the questions, hidden using the class and CSS -->
     <div id="questions" style="text-align:center" class="remove">
         <h3 id="prompt"></h3>
         <div id="choices" class="choices"></div>
     </div>
 
+    <!-- place to submit your name with your final score -->
     <div id="results" style="text-align:center" class="remove">
         <h3>Finished</h3>
         <p>Your score is <span id="final-score"></span></p>
@@ -34,6 +40,7 @@
         </p>
     </div>
 
+    <!-- the link that makes the javascript active -->
     <script src="javascript.js"></script>
 </body>
 </html>
